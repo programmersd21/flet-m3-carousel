@@ -1,0 +1,60 @@
+[project]
+name = "flet-m3-carousel"
+version = "0.1.0"
+description = "Flet extension wrapping the Flutter m3_carousel package."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    { name = "Flet contributors" },
+]
+dependencies = [
+    "flet>=1.0.5",
+]
+
+[dependency-groups]
+dev = [
+    "mkdocs",
+    "mkdocs-material",
+    "mkdocstrings[python]",
+    "pytest",
+    "ruff",
+    "mypy",
+]
+
+[project.urls]
+Homepage = "https://github.com/programmersd21/flet-m3-carousel"
+Documentation = "https://github.com/programmersd21/flet-m3-carousel"
+Repository = "https://github.com/programmersd21/flet-m3-carousel"
+Issues = "https://github.com/programmersd21/flet-m3-carousel/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["flet_m3_carousel", "flet_m3_carousel.*", "flutter", "flutter.*"]
+
+[tool.setuptools.package-data]
+"flet_m3_carousel" = ["**/*"]
+"flutter.flet_m3_carousel" = ["**/*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+extend-exclude = ["build", "src/flutter", ".dart_tool", ".mypy_cache", ".pytest_cache", ".ruff_cache", "*.egg-info", "examples/**/build"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.mypy]
+python_version = "3.10"
+ignore_missing_imports = true
+strict = true
+mypy_path = "src"
+files = ["src", "tests"]
+exclude = "build|\\.dart_tool|\\.mypy_cache|\\.pytest_cache|\\.ruff_cache|egg-info|flutter-packages"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"

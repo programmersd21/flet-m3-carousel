@@ -1,0 +1,7 @@
+site_name: flet-m3-carousel
+
+theme:
+  name: "material"
+
+plugins:
+  - mkdocstrings
