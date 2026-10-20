@@ -1,0 +1,22 @@
+name: flet_m3_carousel
+description: Flet M3Carousel control
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: '>=3.13.0 <4.0.0'
+  flutter: ">=3.47.0"
+
+dependencies:
+  flet: ^1.0.5
+  flutter:
+    sdk: flutter
+  m3_carousel: ^2.1.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
