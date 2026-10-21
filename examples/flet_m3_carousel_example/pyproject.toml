@@ -1,0 +1,44 @@
+[project]
+name = "flet-m3-carousel-example"
+version = "1.0.0"
+description = ""
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    { name = "Flet developer", email = "you@example.com" }
+]
+dependencies = [
+    "flet-m3-carousel",
+    "flet>=1.0.5",
+]
+
+[dependency-groups]
+dev = [
+    "flet-cli>=1.0.5",
+    "flet-desktop-light>=1.0.5",
+    "flet-web>=1.0.5",
+]
+
+[tool.flet]
+# org name in reverse domain name notation, e.g. "com.mycompany".
+# Combined with project.name to build bundle ID for iOS and Android apps
+org = "com.mycompany"
+
+# project display name that is used as an app title on Android and iOS home screens,
+# shown in window titles and about app dialogs on desktop.
+product = "flet-m3-carousel-example"
+
+# company name to display in about app dialogs
+company = "Flet"
+
+# copyright text to display in about app dialogs
+copyright = "Copyright (C) 2026 by MyCompany"
+
+[tool.flet.app]
+path = "src"
+
+[tool.flet.dev_packages]
+flet-m3-carousel = "../.." # relative path
+
+[tool.uv.sources]
+flet-m3-carousel = { path = "../../", editable = true }
