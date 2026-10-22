@@ -1,0 +1,19 @@
+name: integration
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.47.0"
+      - run: pip install flet==1.0.5
+      - run: pip install -e .
+      - working-directory: examples/flet_m3_carousel_example
+        run: flet build linux
