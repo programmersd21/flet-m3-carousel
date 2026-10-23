@@ -241,6 +241,8 @@ class M3Carousel(LayoutControl):
     haptic: str = "none"
     header: str | None = None
     show_all: bool = False
+    autoplay: bool = False
+    autoplay_interval: int = 3000
     on_tap: EventHandler[M3CarouselTapEvent] | None = None
     on_change: EventHandler[M3CarouselChangeEvent] | None = None
 
@@ -261,6 +263,12 @@ class M3Carousel(LayoutControl):
             )
         if self.show_all is not None and not isinstance(self.show_all, bool):
             raise TypeError(f"show_all must be bool, got {type(self.show_all).__name__}")
+        if not isinstance(self.autoplay, bool):
+            raise TypeError(f"autoplay must be bool, got {type(self.autoplay).__name__}")
+        if isinstance(self.autoplay_interval, bool) or not isinstance(self.autoplay_interval, int):
+            raise TypeError("autoplay_interval must be int")
+        if self.autoplay_interval <= 0:
+            raise ValueError("autoplay_interval must be positive")
         for field_name in (
             "uncontained_item_extent",
             "uncontained_shrink_extent",
@@ -369,4 +377,7 @@ class M3Carousel(LayoutControl):
             result["header"] = self.header
         if self.show_all:
             result["show_all"] = True
+        if self.autoplay:
+            result["autoplay"] = True
+            result["autoplay_interval"] = self.autoplay_interval
         return result

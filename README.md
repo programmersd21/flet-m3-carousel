@@ -97,8 +97,8 @@ Dart code. Python-only changes do not require a rebuild.
 
 - Item content is image-based. Arbitrary Flet controls are not supported as
   item content.
-- Autoplay, infinite looping, custom physics, and custom spring curves are not
-  exposed by the upstream package.
+- Infinite looping, custom physics, and custom spring curves are not
+  exposed by the upstream package. Autoplay is implemented in this wrapper.
 - Asset images must be declared in the app `pubspec.yaml`. A Python relative
   path is not a Flutter asset path.
 

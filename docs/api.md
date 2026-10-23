@@ -2,6 +2,8 @@
 
 ## M3Carousel
 
+Additional fields include `autoplay` (bool, default False) and `autoplay_interval` (int, default 3000).
+
 Inherits from `flet.LayoutControl`.
 
 - `items`: list of `M3CarouselItem`. Default empty list.

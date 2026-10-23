@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flet/flet.dart';
 import 'package:flutter/material.dart';
 import 'package:m3_carousel/m3_carousel.dart';
@@ -93,6 +95,7 @@ class M3CarouselControl extends StatefulWidget {
 
 class _M3CarouselControlState extends State<M3CarouselControl> {
   late final M3CarouselController _controller;
+  Timer? _autoplayTimer;
 
   @override
   void initState() {
@@ -104,6 +107,7 @@ class _M3CarouselControlState extends State<M3CarouselControl> {
   @override
   void dispose() {
     widget.control.removeInvokeMethodListener(_handleInvokeMethod);
+    _autoplayTimer?.cancel();
     _controller.dispose();
     super.dispose();
   }
@@ -135,6 +139,16 @@ class _M3CarouselControlState extends State<M3CarouselControl> {
         break;
     }
     return null;
+  }
+
+  void _updateAutoplay(bool autoplay, int interval, int itemCount) {
+    _autoplayTimer?.cancel();
+    _autoplayTimer = null;
+    if (!autoplay || itemCount == 0) return;
+    _autoplayTimer = Timer.periodic(Duration(milliseconds: interval), (_) {
+      if (!mounted) return;
+      _controller.next();
+    });
   }
 
   @override
@@ -171,6 +185,10 @@ class _M3CarouselControlState extends State<M3CarouselControl> {
 
     final rawItems = control.get('items');
     final itemsList = rawItems is List ? rawItems : const <dynamic>[];
+
+    final autoplay = control.getBool('autoplay', false)!;
+    final autoplayInterval = control.getInt('autoplay_interval', 3000)!;
+    _updateAutoplay(autoplay, autoplayInterval, itemsList.length);
 
     final hasTapHandler = control.hasEventHandler('tap');
 
