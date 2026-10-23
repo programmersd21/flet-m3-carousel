@@ -10,9 +10,11 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
+          cache: "pip"
       - run: pip install -e ".[dev]" 2>/dev/null || pip install -e .
       - run: pip install pytest ruff mypy
       - run: ruff check .
       - run: ruff format --check .
       - run: pytest
+      - run: pip install build
       - run: python -m build

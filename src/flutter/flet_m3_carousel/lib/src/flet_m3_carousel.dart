@@ -56,7 +56,10 @@ M3CarouselHapticFeedback hapticFromString(String? value) {
   );
 }
 
-M3CarouselScrim? parseCarouselScrim(BuildContext context, Map<String, dynamic> item) {
+M3CarouselScrim? parseCarouselScrim(
+  BuildContext context,
+  Map<String, dynamic> item,
+) {
   final scrim = item['scrim']?.toString();
   if (scrim == null || scrim.trim().isEmpty || scrim.toLowerCase() == 'none') {
     return null;
@@ -106,7 +109,9 @@ class _M3CarouselControlState extends State<M3CarouselControl> {
   }
 
   Future<dynamic> _handleInvokeMethod(String name, dynamic args) async {
-    final map = args is Map ? Map<String, dynamic>.from(args) : <String, dynamic>{};
+    final map = args is Map
+        ? Map<String, dynamic>.from(args)
+        : <String, dynamic>{};
     switch (name) {
       case 'scroll_to':
       case 'animate_to_item':
@@ -137,8 +142,9 @@ class _M3CarouselControlState extends State<M3CarouselControl> {
     final control = widget.control;
     final layout = layoutFromString(control.getString('layout', 'hero'));
     final axis = axisFromString(control.getString('axis', 'horizontal'));
-    final heroAlignment =
-        heroAlignmentFromString(control.getString('hero_alignment', 'center'));
+    final heroAlignment = heroAlignmentFromString(
+      control.getString('hero_alignment', 'center'),
+    );
 
     final width = control.getDouble('width');
     final height = control.getDouble('height');
@@ -146,17 +152,19 @@ class _M3CarouselControlState extends State<M3CarouselControl> {
     final isExtended = control.getBool('is_extended');
     final freeScroll = control.getBool('free_scroll');
     final uncontainedItemExtent = control.getDouble('uncontained_item_extent');
-    final uncontainedShrinkExtent =
-        control.getDouble('uncontained_shrink_extent');
-    final childElementBorderRadius =
-        control.getDouble('child_element_border_radius');
+    final uncontainedShrinkExtent = control.getDouble(
+      'uncontained_shrink_extent',
+    );
+    final childElementBorderRadius = control.getDouble(
+      'child_element_border_radius',
+    );
     final largeMaxWidth = control.getDouble('large_max_width');
     final itemPadding = control.getDouble('item_padding');
-    final scrollAnimationDuration =
-        control.getInt('scroll_animation_duration');
+    final scrollAnimationDuration = control.getInt('scroll_animation_duration');
     final fixedPulseDelta = control.getDouble('fixed_pulse_delta', 4.0)!;
-    final singleSwipeGestureSensitivityRange =
-        control.getInt('single_swipe_gesture_sensitivity_range');
+    final singleSwipeGestureSensitivityRange = control.getInt(
+      'single_swipe_gesture_sensitivity_range',
+    );
     final haptic = hapticFromString(control.getString('haptic', 'none'));
     final headerValue = control.getString('header');
     final showAll = control.getBool('show_all', false)!;
@@ -169,7 +177,9 @@ class _M3CarouselControlState extends State<M3CarouselControl> {
     final carouselItems = <M3CarouselItem>[];
     for (var i = 0; i < itemsList.length; i++) {
       final raw = itemsList[i];
-      final item = raw is Map ? Map<String, dynamic>.from(raw) : <String, dynamic>{};
+      final item = raw is Map
+          ? Map<String, dynamic>.from(raw)
+          : <String, dynamic>{};
 
       final image = buildImage(
         context: context,
@@ -191,7 +201,9 @@ class _M3CarouselControlState extends State<M3CarouselControl> {
         M3CarouselItem(
           image: image,
           title: titleValue != null ? Text(titleValue.toString()) : null,
-          subtitle: subtitleValue != null ? Text(subtitleValue.toString()) : null,
+          subtitle: subtitleValue != null
+              ? Text(subtitleValue.toString())
+              : null,
           prefixText: prefixValue != null ? Text(prefixValue.toString()) : null,
           showScrim: scrim,
           applyDynamicTextContentTransform: applyDynamic is bool
@@ -222,19 +234,22 @@ class _M3CarouselControlState extends State<M3CarouselControl> {
         isExtended: isExtended,
         freeScroll: freeScroll,
         heroAlignment: heroAlignment,
-        uncontainedItemExtent: uncontainedItemExtent ??
+        uncontainedItemExtent:
+            uncontainedItemExtent ??
             M3CarouselTheme.defaultUncontainedItemExtent,
-        uncontainedShrinkExtent: uncontainedShrinkExtent ??
+        uncontainedShrinkExtent:
+            uncontainedShrinkExtent ??
             M3CarouselTheme.defaultUncontainedShrinkExtent,
         childElementBorderRadius: childElementBorderRadius,
         largeMaxWidth: largeMaxWidth,
         itemPadding: itemPadding != null ? EdgeInsets.all(itemPadding) : null,
-        scrollAnimationDuration: scrollAnimationDuration ??
+        scrollAnimationDuration:
+            scrollAnimationDuration ??
             M3CarouselTheme.defaultScrollAnimationDuration,
         fixedPulseDelta: fixedPulseDelta,
         singleSwipeGestureSensitivityRange:
             singleSwipeGestureSensitivityRange ??
-                M3CarouselTheme.defaultSingleSwipeGestureSensitivityRange,
+            M3CarouselTheme.defaultSingleSwipeGestureSensitivityRange,
         haptic: haptic,
         header: headerValue != null ? Text(headerValue) : null,
         showAll: showAll,

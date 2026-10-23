@@ -9,8 +9,10 @@ void main() {
       expect(layoutFromString('hero'), M3CarouselType.hero);
       expect(layoutFromString('contained'), M3CarouselType.contained);
       expect(layoutFromString('uncontained'), M3CarouselType.uncontained);
-      expect(layoutFromString('uncontainedMultiAspect'),
-          M3CarouselType.uncontainedMultiAspect);
+      expect(
+        layoutFromString('uncontainedMultiAspect'),
+        M3CarouselType.uncontainedMultiAspect,
+      );
       expect(layoutFromString('fullScreen'), M3CarouselType.fullScreen);
     });
 
@@ -44,11 +46,16 @@ void main() {
 
   group('parseCarouselScrim', () {
     test('none returns null', () {
-      expect(parseCarouselScrim(const _FakeContext(), {'scrim': 'none'}), isNull);
+      expect(
+        parseCarouselScrim(const _FakeContext(), {'scrim': 'none'}),
+        isNull,
+      );
     });
 
     test('gradient returns scrim', () {
-      final scrim = parseCarouselScrim(const _FakeContext(), {'scrim': 'gradient'});
+      final scrim = parseCarouselScrim(const _FakeContext(), {
+        'scrim': 'gradient',
+      });
       expect(scrim, isNotNull);
       expect(scrim!.isGradient, isTrue);
     });
