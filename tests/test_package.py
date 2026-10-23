@@ -1,3 +1,5 @@
+import math
+
 import pytest
 
 from flet_m3_carousel import (
@@ -65,6 +67,23 @@ def test_duplicate_key() -> None:
                 M3CarouselItem(key="a", image="y"),
             ]
         )
+
+
+def test_non_finite_aspect_ratio() -> None:
+    with pytest.raises(ValueError):
+        M3CarouselItem(image="x.jpg", aspect_ratio=math.nan)
+    with pytest.raises(ValueError):
+        M3CarouselItem(image="x.jpg", aspect_ratio=math.inf)
+
+
+def test_bool_not_accepted_as_number() -> None:
+    with pytest.raises(TypeError):
+        M3CarouselItem(image="x.jpg", aspect_ratio=True)
+
+
+def test_invalid_fixed_pulse_delta() -> None:
+    with pytest.raises(ValueError):
+        M3Carousel(fixed_pulse_delta=math.nan)
 
 
 def test_serialized_output() -> None:

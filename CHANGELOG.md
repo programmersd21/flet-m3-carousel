@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.1
+
+- Added non-finite and invalid numeric validation.
+- Added controller methods and expanded bindings.
+- Improved package asset inclusion.
+- Updated documentation and workflows.
+
 ## 0.1.0
 
 - Initial wrapper around m3_carousel 2.1.5.

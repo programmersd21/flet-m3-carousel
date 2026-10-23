@@ -1,6 +1,6 @@
 [project]
 name = "flet-m3-carousel"
-version = "0.1.0"
+version = "0.1.1"
 description = "Flet extension wrapping the Flutter m3_carousel package."
 readme = "README.md"
 requires-python = ">=3.10"

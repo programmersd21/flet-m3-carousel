@@ -82,6 +82,15 @@ def _normalize_haptic(value: Any) -> str:
     return normalized
 
 
+def _finite_number(value: Any, name: str) -> float:
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        raise TypeError(f"{name} must be a number, got {type(value).__name__}")
+    number = float(value)
+    if not number == number or number in (float("inf"), float("-inf")):
+        raise ValueError(f"{name} must be finite, got {value!r}")
+    return number
+
+
 @dataclass
 class M3CarouselItem:
     """One item in an :class:`M3Carousel`.
@@ -130,11 +139,8 @@ class M3CarouselItem:
                 "apply_dynamic_text_content_transform must be bool, "
                 f"got {type(self.apply_dynamic_text_content_transform).__name__}"
             )
-        if not isinstance(self.aspect_ratio, (int, float)) or isinstance(self.aspect_ratio, bool):
-            raise TypeError(
-                f"aspect_ratio must be a number, got {type(self.aspect_ratio).__name__}"
-            )
-        if self.aspect_ratio <= 0:
+        number = _finite_number(self.aspect_ratio, "aspect_ratio")
+        if number <= 0:
             raise ValueError(f"aspect_ratio must be positive, got {self.aspect_ratio!r}")
         if self.semantic_label is not None and not isinstance(self.semantic_label, str):
             raise TypeError(
@@ -145,11 +151,8 @@ class M3CarouselItem:
             raise TypeError(
                 f"scrim_color must be str or None, got {type(self.scrim_color).__name__}"
             )
-        if not isinstance(self.scrim_opacity, (int, float)) or isinstance(self.scrim_opacity, bool):
-            raise TypeError(
-                f"scrim_opacity must be a number, got {type(self.scrim_opacity).__name__}"
-            )
-        if not 0.0 <= float(self.scrim_opacity) <= 1.0:
+        number = _finite_number(self.scrim_opacity, "scrim_opacity")
+        if not 0.0 <= number <= 1.0:
             raise ValueError(
                 f"scrim_opacity must be between 0.0 and 1.0, got {self.scrim_opacity!r}"
             )
@@ -247,7 +250,48 @@ class M3Carousel(LayoutControl):
         self.axis = _normalize_axis(self.axis)
         self.hero_alignment = _normalize_alignment(self.hero_alignment)
         self.haptic = _normalize_haptic(self.haptic)
-        self.haptic = _normalize_haptic(self.haptic)
+
+        if self.is_extended is not None and not isinstance(self.is_extended, bool):
+            raise TypeError(
+                f"is_extended must be bool or None, got {type(self.is_extended).__name__}"
+            )
+        if self.free_scroll is not None and not isinstance(self.free_scroll, bool):
+            raise TypeError(
+                f"free_scroll must be bool or None, got {type(self.free_scroll).__name__}"
+            )
+        if self.show_all is not None and not isinstance(self.show_all, bool):
+            raise TypeError(f"show_all must be bool, got {type(self.show_all).__name__}")
+        for field_name in (
+            "uncontained_item_extent",
+            "uncontained_shrink_extent",
+            "child_element_border_radius",
+            "large_max_width",
+            "item_padding",
+            "fixed_pulse_delta",
+        ):
+            value = getattr(self, field_name)
+            if value is not None:
+                _finite_number(value, field_name)
+        if self.uncontained_item_extent is not None and self.uncontained_item_extent <= 0:
+            raise ValueError("uncontained_item_extent must be positive")
+        if self.uncontained_shrink_extent is not None and self.uncontained_shrink_extent <= 0:
+            raise ValueError("uncontained_shrink_extent must be positive")
+        if self.fixed_pulse_delta is not None:
+            _finite_number(self.fixed_pulse_delta, "fixed_pulse_delta")
+        if self.scroll_animation_duration is not None:
+            if isinstance(self.scroll_animation_duration, bool) or not isinstance(
+                self.scroll_animation_duration, int
+            ):
+                raise TypeError("scroll_animation_duration must be int or None")
+            if self.scroll_animation_duration < 0:
+                raise ValueError("scroll_animation_duration must be non-negative")
+        if self.single_swipe_gesture_sensitivity_range is not None:
+            if isinstance(self.single_swipe_gesture_sensitivity_range, bool) or not isinstance(
+                self.single_swipe_gesture_sensitivity_range, int
+            ):
+                raise TypeError("single_swipe_gesture_sensitivity_range must be int or None")
+            if self.single_swipe_gesture_sensitivity_range < 0:
+                raise ValueError("single_swipe_gesture_sensitivity_range must be non-negative")
 
         if self.items is None:
             self.items = []
