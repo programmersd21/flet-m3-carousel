@@ -1,4 +1,5 @@
 import math
+from unittest.mock import AsyncMock, patch
 
 import pytest
 
@@ -100,3 +101,17 @@ def test_event_fields() -> None:
     e2 = M3CarouselChangeEvent(control=None, name="change", index=1, item_key=None)  # type: ignore[arg-type]
     assert e2.index == 1
     assert e2.item_key is None
+
+
+def test_controller_methods_invoke_dart() -> None:
+    carousel = M3Carousel()
+    with patch.object(carousel, "_invoke_method", new=AsyncMock()) as mocked:
+        import asyncio
+
+        asyncio.run(carousel.scroll_to(2))
+        asyncio.run(carousel.jump_to_item(1))
+        asyncio.run(carousel.animate_to_item(3))
+        asyncio.run(carousel.next())
+        asyncio.run(carousel.previous())
+        asyncio.run(carousel.show_all_items())
+        assert mocked.await_count == 6
