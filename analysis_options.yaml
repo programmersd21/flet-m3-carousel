@@ -1,0 +1,6 @@
+analyzer:
+  exclude:
+    - build/**
+    - examples/**/build/**
+    - src/flutter/**
+    - "**/test/**"
