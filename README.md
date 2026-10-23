@@ -88,12 +88,17 @@ flet build linux
 flet run
 ```
 
+## Compatibility
+
+This package follows Flet's extension model. Build the client after changing
+Dart code. Python-only changes do not require a rebuild.
+
 ## Known limitations
 
-- Arbitrary Flet controls are not supported as item content. Items use image
-  sources, titles, and subtitles.
+- Item content is image-based. Arbitrary Flet controls are not supported as
+  item content.
 - Autoplay, infinite looping, custom physics, and custom spring curves are not
-  exposed.
+  exposed by the upstream package.
 - Asset images must be declared in the app `pubspec.yaml`. A Python relative
   path is not a Flutter asset path.
 
