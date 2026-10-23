@@ -243,6 +243,7 @@ class M3Carousel(LayoutControl):
     show_all: bool = False
     autoplay: bool = False
     autoplay_interval: int = 3000
+    loop: bool = False
     on_tap: EventHandler[M3CarouselTapEvent] | None = None
     on_change: EventHandler[M3CarouselChangeEvent] | None = None
 
@@ -265,6 +266,8 @@ class M3Carousel(LayoutControl):
             raise TypeError(f"show_all must be bool, got {type(self.show_all).__name__}")
         if not isinstance(self.autoplay, bool):
             raise TypeError(f"autoplay must be bool, got {type(self.autoplay).__name__}")
+        if not isinstance(self.loop, bool):
+            raise TypeError(f"loop must be bool, got {type(self.loop).__name__}")
         if isinstance(self.autoplay_interval, bool) or not isinstance(self.autoplay_interval, int):
             raise TypeError("autoplay_interval must be int")
         if self.autoplay_interval <= 0:
@@ -380,4 +383,6 @@ class M3Carousel(LayoutControl):
         if self.autoplay:
             result["autoplay"] = True
             result["autoplay_interval"] = self.autoplay_interval
+        if self.loop:
+            result["loop"] = True
         return result

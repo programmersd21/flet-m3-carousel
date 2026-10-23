@@ -182,6 +182,7 @@ class _M3CarouselControlState extends State<M3CarouselControl> {
     final haptic = hapticFromString(control.getString('haptic', 'none'));
     final headerValue = control.getString('header');
     final showAll = control.getBool('show_all', false)!;
+    final loop = control.getBool('loop', false)!;
 
     final rawItems = control.get('items');
     final itemsList = rawItems is List ? rawItems : const <dynamic>[];
@@ -285,6 +286,11 @@ class _M3CarouselControlState extends State<M3CarouselControl> {
                   'index': index,
                   'item_key': itemKey,
                 });
+                if (loop && index == itemsList.length - 1) {
+                  Future<void>.delayed(const Duration(milliseconds: 300), () {
+                    if (mounted) _controller.jumpToItem(0);
+                  });
+                }
               }
             : null,
         children: carouselItems,
