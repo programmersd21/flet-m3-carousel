@@ -18,6 +18,7 @@ jobs:
         with:
           flutter-version: "3.47.0"
       - run: pip install -e .
+      - run: pip install pytest
       - run: pytest
       - working-directory: src/flutter/flet_m3_carousel
         run: flutter pub get
